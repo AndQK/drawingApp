@@ -1,0 +1,5 @@
+I just started my project (15.3.2022) because I had lots of other school work to do.
+I have created a first version of my GUI. It has different buttons and two drop-down lists.
+The GUI looks good, but I will upgrade it eventually. The next step is to decide what component I will use for the graphics,
+is it canvas or something else. Starting the project and making the first version of my GUI took me about 3-4 hours.
+
