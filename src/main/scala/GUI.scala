@@ -1,7 +1,8 @@
 import scala.swing._
 import scala.collection.mutable._
+import scala.swing.event.{MouseDragged, MousePressed, MouseReleased}
 
-  object GUI extends SimpleSwingApplication {
+object GUI extends SimpleSwingApplication {
 
  // STRINGS for drop down boxes
   val colours = Seq("Black", "Red", "Green", "Orange", "Yellow", "Purple", "Brown", "Blue")
@@ -14,15 +15,16 @@ import scala.collection.mutable._
     resizable = false
 
 
-    minimumSize   = new Dimension(1000, 1000)
-    preferredSize = new Dimension(1000, 1000)
-    maximumSize   = new Dimension(1000, 1000)
+    minimumSize   = new Dimension(700, 700)
+    preferredSize = new Dimension(700, 700)
+    maximumSize   = new Dimension(700, 700)
 
 
     val drawingScreen: Component = new DrawSpace
-    drawingScreen.preferredSize = new Dimension(250, 250)
-    drawingScreen.minimumSize = new Dimension(250, 250)
-    drawingScreen.maximumSize = new Dimension(250, 250)
+    drawingScreen.preferredSize = new Dimension(500, 500)
+    drawingScreen.minimumSize = new Dimension(500, 500)
+    drawingScreen.maximumSize = new Dimension(500, 500)
+
 
     // buttons which we use to switch between settings
     val buttons = new FlowPanel {
@@ -36,14 +38,14 @@ import scala.collection.mutable._
       contents += new Button("save")
     }
     val drawPanel = new FlowPanel {
-      preferredSize = new Dimension(250, 250)
-      minimumSize = new Dimension(250, 250)
-      maximumSize = new Dimension(250, 250)
       contents += drawingScreen
     }
-    contents = buttons
-    contents = drawPanel
-    listenTo(drawingScreen.mouse.clicks)
+    contents = new BoxPanel(Orientation.Vertical) {
+      contents += buttons
+      contents += drawPanel
+
+    }
+
   }
 }
 

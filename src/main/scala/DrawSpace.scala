@@ -14,30 +14,27 @@ class DrawSpace extends Component {
   private var currentY = 0
   private var oldX = 0
   private var oldY = 0
-
-  def DrawSpace() = {
-    peer.setDoubleBuffered(false)
-    peer.addMouseListener(new MouseAdapter {
+  peer.setDoubleBuffered(false)
+  peer.addMouseListener(new MouseAdapter {
     override def mousePressed(e: event.MouseEvent) = {
       oldX = e.getX
       oldY = e.getY
       }
     })
+   peer.addMouseMotionListener(new MouseMotionAdapter {
+     override def mouseDragged(e: event.MouseEvent) = {
+       currentX = e.getX
+       currentY = e.getY
 
-    peer.addMouseMotionListener(new MouseMotionAdapter {
-      override def mouseDragged(e: event.MouseEvent) = {
-        currentX = e.getX
-        currentY = e.getY
+       if (g2.isDefined) {
+         g2.get.drawLine(oldX, oldY, currentX, currentY)
+         repaint()
+         oldX = currentX
+         oldY = currentY
+       }
+     }
+   })
 
-        if (g2.isDefined) {
-          g2.get.drawLine(oldX, oldY, currentX, currentY)
-          repaint()
-          oldX = currentX
-          oldY = currentY
-        }
-      }
-    })
-  }
    override def paintComponent(g: Graphics2D) = {
     if (image.isEmpty) {
       image = Some(peer.createImage(peer.getSize().width, peer.getSize().height))
