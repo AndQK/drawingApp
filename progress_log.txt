@@ -11,5 +11,5 @@ Latest update was fixing DrawSpace class so that now it is possible to see chang
 Next step is to add all additional methods for changing the colours and drawing the shapes.
 I think I'm progressing just fine, and eventually I will finish my project in time. So far
 my schedule hasn't been the same as I planned it to be. Creating and fixing DrawSpace class took me around 8 hours.
-The most challenging and time-consuming thing was to figure out what was wrong with the class, and it took me around 4 to 5 hours fix it.
-Also changing the appearance of the GUI took some time. Maybe 1 to 2 hours.
+The most challenging and time-consuming thing was to figure out what was wrong with the class, and it took me around 4 to 5 hours to fix it.
+Also changing the appearance of the GUI took me some time. Maybe 1 to 2 hours.
