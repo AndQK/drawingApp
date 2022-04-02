@@ -5,6 +5,7 @@ import scala.swing.Component
 
 class DrawSpace extends Component {
 
+  private var shape: String = "Line"
 
   private var image: Option[Image] = None
 
@@ -44,7 +45,7 @@ class DrawSpace extends Component {
     }
     g.drawImage(image.get, 0, 0, null)
   }
-
+  // public methods for GUI components
   def clear() = {
     g2.get.setPaint(Color.white)
     g2.get.fillRect(0, 0, peer.getSize().width, peer.getSize().height)
@@ -52,5 +53,10 @@ class DrawSpace extends Component {
     repaint()
 
   }
-
+  def setColor(color: Color) = {
+    g2.get.setPaint(color)
+  }
+  def changeShape(shape: String) = {
+    this.shape = shape
+  }
 }
