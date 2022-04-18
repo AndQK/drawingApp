@@ -21,4 +21,4 @@ With the new structure it was easier to separate implementation for pen method f
 structure of drawSpace, and it is important for storing and loading the imformation of the previously drawn image. It is important for undo- and redo-methods as well.
 DrawSpace class has still some bugs that I planned to fix as soon as possible before the deadline.
 In addtion, I added a feature that enables us to see a preview of the shape we want to draw. It doesn't work perfectly yet, so I need to add some minor changes to it. All in all, this whole thing took me about 25 hours.
-
+Also, I'm running behind schedule but not much.
