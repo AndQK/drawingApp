@@ -13,3 +13,12 @@ I think I'm progressing just fine, and eventually I will finish my project in ti
 my schedule hasn't been the same as I planned it to be. Creating and fixing DrawSpace class took me around 8 hours.
 The most challenging and time-consuming thing was to figure out what was wrong with the class, and it took me around 4 to 5 hours to fix it.
 Also changing the appearance of the GUI took me some time. Maybe 1 to 2 hours.
+
+Now my drawSpace can draw different shapes for example rectangles, circles, ellipses and lines. This part took me about 12 to 15 hours because I had some difficulties with the implementation.
+On the first try my program drew lines which consisted of shapes, in other words when I tried to draw a circle my program drew a line of different sized circles or other shapes.
+So I had to change the structure of DrawSpace class by extending it to mouseListener and mouseMotionListener. This helped me to write a bit better mouseDragged and mouseReleased methods.
+With the new structure it was easier to separate implementation for pen method from line, circle and rectangle methods. I also created a new class shape because I realised that it is good addition for the
+structure of drawSpace, and it is important for storing and loading the imformation of the previously drawn image. It is important for undo- and redo-methods as well.
+DrawSpace class has still some bugs that I planned to fix as soon as possible before the deadline.
+In addtion, I added a feature that enables us to see a preview of the shape we want to draw. It doesn't work perfectly yet, so I need to add some minor changes to it. All in all, this whole thing took me about 25 hours.
+
