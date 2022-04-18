@@ -6,7 +6,7 @@ object GUI extends SimpleSwingApplication {
 
  // STRINGS for drop down boxes
   val colours = Seq("Black", "Red", "Green", "Orange", "Yellow", "Brown", "Blue", "Pink", "Magenta", "Cyan", "Gray", "Dark_gray", "Lime", "Violet", "Salmon", "Gold")
-  val shapes  = Seq("Circle", "Rectangle", "Ellipse", "Line")
+  val shapes  = Seq("Line", "Circle", "Rectangle", "Ellipse")
 
   // Creates the Frame with buttons
   def top =  new MainFrame {
@@ -41,6 +41,7 @@ object GUI extends SimpleSwingApplication {
 
     // buttons for different actions
     val PenBtn = new Button("Pen")
+    PenBtn.peer.addActionListener(e => drawingScreen.changeShape("Pen"))
 
     val undoBtn = new Button("Undo")
 
