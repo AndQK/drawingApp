@@ -44,6 +44,7 @@ object GUI extends SimpleSwingApplication {
     PenBtn.peer.addActionListener(e => drawingScreen.changeShape("Pen"))
 
     val undoBtn = new Button("Undo")
+    undoBtn.peer.addActionListener(e => drawingScreen.undo())
 
     val textBtn = new Button("Text")
 
