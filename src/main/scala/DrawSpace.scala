@@ -1,7 +1,7 @@
 
 import scala.math._
 import java.awt.event.{MouseEvent, MouseListener, MouseMotionListener}
-import java.awt.{Color, Graphics, Graphics2D, Image, RenderingHints, event}
+import java.awt.{Color, Graphics2D, Image, RenderingHints, event}
 import scala.collection.mutable._
 import scala.swing.Component
 
@@ -174,7 +174,7 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
     this.shape = shape
   }
 
-  // method for undoing the image
+  // method for undoing the image.
   def undo() = {
     if (shapes.nonEmpty) {
       if (shapes.last.group != 0) {
@@ -193,7 +193,27 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
       repaint()
       }
 
+    }
+    // method for redoing the image.
+    def redo() = {
+      if (deleted.nonEmpty) {
+        if (deleted.last.group != 0) {
+          val firstout = deleted.last
+          shapes += firstout
+          deleted -= firstout
+          while (deleted.nonEmpty && deleted.last.group == firstout.group) {
+            shapes += deleted.last
+            deleted -= deleted.last
+            repaint()
+          }
+        } else if (deleted.last.group == 0) {
+          shapes += deleted.last
+          deleted -= deleted.last
+          repaint()
+        }
       }
+
+    }
   }
 
 
