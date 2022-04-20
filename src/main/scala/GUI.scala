@@ -46,6 +46,9 @@ object GUI extends SimpleSwingApplication {
     val undoBtn = new Button("Undo")
     undoBtn.peer.addActionListener(e => drawingScreen.undo())
 
+    val redoBtn = new Button("redo")
+    redoBtn.peer.addActionListener(e => drawingScreen.redo())
+
     val textBtn = new Button("Text")
 
     val loadBtn = new Button("Load")
@@ -60,6 +63,7 @@ object GUI extends SimpleSwingApplication {
       contents += shapeList
       contents += PenBtn
       contents += undoBtn
+      contents += redoBtn
       contents += textBtn
       contents += loadBtn
       contents += clearBtn
