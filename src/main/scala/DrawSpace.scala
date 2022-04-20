@@ -194,27 +194,28 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
       }
 
     }
+  }
     // method for redoing the image.
-    def redo() = {
-      if (deleted.nonEmpty) {
-        if (deleted.last.group != 0) {
-          val firstout = deleted.last
-          shapes += firstout
-          deleted -= firstout
-          while (deleted.nonEmpty && deleted.last.group == firstout.group) {
-            shapes += deleted.last
-            deleted -= deleted.last
-            repaint()
-          }
-        } else if (deleted.last.group == 0) {
+  def redo() = {
+    if (deleted.nonEmpty) {
+      if (deleted.last.group != 0) {
+        val firstout = deleted.last
+        shapes += firstout
+        deleted -= firstout
+        while (deleted.nonEmpty && deleted.last.group == firstout.group) {
           shapes += deleted.last
           deleted -= deleted.last
           repaint()
         }
+      } else if (deleted.last.group == 0) {
+        shapes += deleted.last
+        deleted -= deleted.last
+        repaint()
       }
-
     }
+
   }
+
 
 
 
