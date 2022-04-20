@@ -7,6 +7,9 @@ import scala.swing.Component
 
 class DrawSpace extends Component with MouseListener with MouseMotionListener {
 
+  // Every shape has its own group number. This is needed when undoing sketchings by pencil.
+  var groupNum = 1
+
   // MouseListeners for drawSpace component
   this.peer.addMouseListener(this)
   this.peer.addMouseMotionListener(this)
@@ -45,23 +48,26 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
        isDragged = true
        if (shape == "Pen") {
          //g2.get.drawLine(oldX, oldY, currentX, currentY)
-         shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line")
+         shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", groupNum)
          repaint()
          oldX = currentX
          oldY = currentY
+       } else if (shape == "Line") {
+         preview += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
+         repaint()
        } else if (shape == "Circle") {
          //g2.get.drawOval(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX))
-         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle")
+         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
          repaint()
 
        } else if (shape == "Rectangle") {
          //g2.get.drawRect(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY))
-         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle")
+         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
          repaint()
 
        } else if (shape == "Ellipse") {
          //g2.get.drawOval(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY))
-         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse")
+         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
          repaint()
 
         }
@@ -69,17 +75,18 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
    }
 
   override def mouseReleased(e: MouseEvent) = {
+    groupNum += 1
     if (shape == "Line" && isDragged) {
-      shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line")
+      shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
     }
     else if (shape == "Ellipse" && isDragged) {
-      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse")
+      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
     }
     else if (shape == "Circle" && isDragged) {
-      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle")
+      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
     }
     else if (shape == "Rectangle" && isDragged) {
-      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle")
+      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
     }
     isDragged = false
     deleted.clear
@@ -127,21 +134,21 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
         graphics.drawRect(element.oldX, element.oldY, element.currentX, element.currentY)
       }
     }
-      while (preview.nonEmpty) {
+      if (preview.nonEmpty) {
         val prev = preview.last
-        preview -= prev
-        g2.get.setPaint(prev.color)
+        preview.clear
+        graphics.setPaint(prev.color)
         if (prev.shape == "Line") {
-          g2.get.drawLine(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          graphics.drawLine(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
 
         } else if (prev.shape == "Ellipse") {
-          g2.get.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          graphics.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
 
         } else if (prev.shape == "Circle") {
-          g2.get.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          graphics.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
 
         } else if (prev.shape == "Rectangle") {
-          g2.get.drawRect(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          graphics.drawRect(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
 
         }
 
@@ -151,11 +158,13 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
   def clear() = {
     g2.get.setPaint(Color.white)
     g2.get.fillRect(0, 0, peer.getSize().width, peer.getSize().height)
-    g2.get.setPaint(currentColor)
+    shapes.clear
+    deleted.clear
     repaint()
+    g2.get.setPaint(currentColor)
 
   }
-  // changes the colour of the graphics compnent
+  // changes the colour of the graphics component
   def setColor(color: Color) = {
     currentColor = color
     g2.get.setPaint(color)
@@ -164,6 +173,29 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
   def changeShape(shape: String) = {
     this.shape = shape
   }
+
+  // method for undoing the image
+  def undo() = {
+    if (shapes.nonEmpty) {
+      if (shapes.last.group != 0) {
+          val firstOut = shapes.last
+          shapes -= firstOut
+          deleted += firstOut
+          while (shapes.nonEmpty && shapes.last.group == firstOut.group) {
+            val removed = shapes.last
+            deleted += removed
+            shapes -= removed
+            repaint()
+          }
+      } else if (shapes.last.group == 0) {
+      deleted += shapes.last
+      shapes -= shapes.last
+      repaint()
+      }
+
+      }
+  }
+
 
 
 }
