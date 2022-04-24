@@ -36,6 +36,9 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
 
   private var isDragged = false
 
+  // Helper method for identifying which coordinate is bigger and brings the smaller one back.
+  private def smaller(first: Int, second: Int) = if (first > second) second else first
+
   peer.setDoubleBuffered(false)
     override def mousePressed(e: event.MouseEvent) = {
       oldX = e.getX
@@ -57,17 +60,16 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
          repaint()
        } else if (shape == "Circle") {
          //g2.get.drawOval(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX))
-         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
+         preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
          repaint()
 
        } else if (shape == "Rectangle") {
          //g2.get.drawRect(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY))
-         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
+         preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
          repaint()
-
        } else if (shape == "Ellipse") {
          //g2.get.drawOval(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY))
-         preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
+         preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
          repaint()
 
         }
@@ -80,13 +82,13 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
       shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
     }
     else if (shape == "Ellipse" && isDragged) {
-      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
+      shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
     }
     else if (shape == "Circle" && isDragged) {
-      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
+      shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
     }
     else if (shape == "Rectangle" && isDragged) {
-      shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
+      shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
     }
     isDragged = false
     deleted.clear
