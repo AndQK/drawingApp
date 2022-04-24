@@ -123,35 +123,25 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
 
     for (element <- shapes) {
        graphics.setPaint(element.color)
-
-      if (element.shape == "Line") {
-        graphics.drawLine(element.oldX, element.oldY, element.currentX, element.currentY)
-      } else if (element.shape == "Ellipse") {
-        graphics.drawOval(element.oldX, element.oldY, element.currentX, element.currentY)
-      } else if (element.shape == "Circle") {
-        graphics.drawOval(element.oldX, element.oldY, element.currentX, element.currentY)
-      } else if (element.shape == "Rectangle") {
-        graphics.drawRect(element.oldX, element.oldY, element.currentX, element.currentY)
-      }
+       element.shape match {
+         case "Line"      => graphics.drawLine(element.oldX, element.oldY, element.currentX, element.currentY)
+         case "Ellipse"   => graphics.drawOval(element.oldX, element.oldY, element.currentX, element.currentY)
+         case "Circle"    => graphics.drawOval(element.oldX, element.oldY, element.currentX, element.currentY)
+         case "Rectangle" => graphics.drawRect(element.oldX, element.oldY, element.currentX, element.currentY)
+         case _           => // does nothing
+       }
     }
       if (preview.nonEmpty) {
         val prev = preview.last
         preview.clear
         graphics.setPaint(prev.color)
-        if (prev.shape == "Line") {
-          graphics.drawLine(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
-
-        } else if (prev.shape == "Ellipse") {
-          graphics.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
-
-        } else if (prev.shape == "Circle") {
-          graphics.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
-
-        } else if (prev.shape == "Rectangle") {
-          graphics.drawRect(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
-
+        prev.shape match {
+          case "Line"      => graphics.drawLine(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          case "Ellipse"   => graphics.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          case "Circle"    => graphics.drawOval(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          case "Rectangle" => graphics.drawRect(prev.oldX, prev.oldY, prev.currentX, prev.currentY)
+          case _           => // does nothing
         }
-
       }
   }
   // public methods for GUI components
@@ -178,19 +168,19 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
   def undo() = {
     if (shapes.nonEmpty) {
       if (shapes.last.group != 0) {
-          val firstOut = shapes.last
-          shapes -= firstOut
-          deleted += firstOut
-          while (shapes.nonEmpty && shapes.last.group == firstOut.group) {
-            val removed = shapes.last
-            deleted += removed
-            shapes -= removed
-            repaint()
+        val firstOut = shapes.last
+        shapes -= firstOut
+        deleted += firstOut
+        while (shapes.nonEmpty && shapes.last.group == firstOut.group) {
+          val removed = shapes.last
+          deleted += removed
+          shapes -= removed
+          repaint()
           }
       } else if (shapes.last.group == 0) {
-      deleted += shapes.last
-      shapes -= shapes.last
-      repaint()
+        deleted += shapes.last
+        shapes -= shapes.last
+        repaint()
       }
 
     }
