@@ -49,46 +49,31 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
        currentX = e.getX
        currentY = e.getY
        isDragged = true
-       if (shape == "Pen") {
-         //g2.get.drawLine(oldX, oldY, currentX, currentY)
-         shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", groupNum)
-         repaint()
-         oldX = currentX
-         oldY = currentY
-       } else if (shape == "Line") {
-         preview += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
-         repaint()
-       } else if (shape == "Circle") {
-         //g2.get.drawOval(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX))
-         preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
-         repaint()
-
-       } else if (shape == "Rectangle") {
-         //g2.get.drawRect(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY))
-         preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
-         repaint()
-       } else if (shape == "Ellipse") {
-         //g2.get.drawOval(oldX, oldY, abs(currentX - oldX), abs(currentY - oldY))
-         preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
-         repaint()
-
-        }
-
+       shape match {
+         case "Pen"       => {
+                             shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", groupNum)
+                             oldX = currentX
+                             oldY = currentY
+         }
+         case "Line"      => preview += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
+         case "Circle"    => preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
+         case "Rectangle" => preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
+         case "Ellipse"   => preview += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
+         case _           => // does nothing
+       }
+       repaint()
    }
 
   override def mouseReleased(e: MouseEvent) = {
     groupNum += 1
-    if (shape == "Line" && isDragged) {
-      shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
-    }
-    else if (shape == "Ellipse" && isDragged) {
-      shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
-    }
-    else if (shape == "Circle" && isDragged) {
-      shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
-    }
-    else if (shape == "Rectangle" && isDragged) {
-      shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
+    if (isDragged) {
+      shape match {
+        case "Line"      => shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
+        case "Circle"    => shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
+        case "Rectangle" => shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
+        case "Ellipse"   => shapes += new Shape(smaller(oldX, currentX), smaller(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
+        case _           => // does nothing
+      }
     }
     isDragged = false
     deleted.clear
