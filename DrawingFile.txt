@@ -1,26 +1,66 @@
 Shapes:
-Type: Rectangle
-x-coordinate: 128
-y-coordinate: 51
-Width: 105
-Height: 156
-Color: 0,0,0
-Group: 0
-------
-Type: Rectangle
-x-coordinate: 220
+Type: Line
+x-coordinate: 311
 y-coordinate: 150
-Width: 100
-Height: 145
+Width: 204
+Height: 359
 Color: 0,0,0
 Group: 0
 ------
-Type: Rectangle
-x-coordinate: 82
-y-coordinate: 262
-Width: 104
-Height: 116
+Type: Line
+x-coordinate: 215
+y-coordinate: 158
+Width: 433
+Height: 392
 Color: 0,0,0
+Group: 0
+------
+Type: Line
+x-coordinate: 475
+y-coordinate: 139
+Width: 302
+Height: 343
+Color: 0,0,0
+Group: 0
+------
+Type: Line
+x-coordinate: 420
+y-coordinate: 55
+Width: 560
+Height: 371
+Color: 0,0,0
+Group: 0
+------
+Type: Line
+x-coordinate: 630
+y-coordinate: 166
+Width: 555
+Height: 457
+Color: 0,0,0
+Group: 0
+------
+Type: Circle
+x-coordinate: 135
+y-coordinate: 31
+Width: 117
+Height: 117
+Color: 0,0,0
+Group: 0
+------
+Type: Circle
+x-coordinate: 99
+y-coordinate: 166
+Width: 135
+Height: 135
+Color: 0,255,0
+Group: 0
+------
+Type: Circle
+x-coordinate: 147
+y-coordinate: 426
+Width: 172
+Height: 172
+Color: 0,255,0
 Group: 0
 ------
 EndOfFile
