@@ -49,13 +49,13 @@ object GUI extends SimpleSwingApplication {
     val redoBtn = new Button("redo")
     redoBtn.peer.addActionListener(e => drawingScreen.redo())
 
-    val textBtn = new Button("Text")
-
     val loadBtn = new Button("Load")
+    loadBtn.peer.addActionListener(e => DrawReader.loadDrawing("DrawingFile.txt", drawingScreen))
 
     val clearBtn = new Button("Clear")
     clearBtn.peer.addActionListener(e => drawingScreen.clear())
     val saveBtn = new Button("Save")
+    saveBtn.peer.addActionListener(e => DrawReader.saveDrawing("DrawingFile.txt", drawingScreen))
 
     // buttons which we use to switch between settings
     val buttons = new FlowPanel {
@@ -64,7 +64,6 @@ object GUI extends SimpleSwingApplication {
       contents += PenBtn
       contents += undoBtn
       contents += redoBtn
-      contents += textBtn
       contents += loadBtn
       contents += clearBtn
       contents += saveBtn
