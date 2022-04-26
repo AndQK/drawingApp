@@ -13,7 +13,28 @@ object GUI extends SimpleSwingApplication {
 
     title    = "DrawingApp"
     resizable = false
+    val chooser = new FileChooser()
+    // private method for buttons to handle file choosing and saving or loading to it.
+    private def loadOrSave(name: String) = {
 
+      if (name == "Save") {
+        val returnVal = chooser.showSaveDialog(this)
+        returnVal.toString match {
+          case "Approve" => val file: java.io.File = chooser.selectedFile; DrawReader.saveDrawing(file.toString, drawingScreen)
+          case "Cancel" => //just closes the dialog.
+          case _        => // Does nothing
+        }
+
+      } else if (name == "Load") {
+        val returnVal = chooser.showOpenDialog(this)
+          returnVal.toString match {
+            case "Approve" => val file: java.io.File = chooser.selectedFile; DrawReader.loadDrawing(file.toString, drawingScreen)
+            case "Cancel" => //just closes the dialog.
+            case _        => // Does nothing
+          }
+      }
+
+    }
 
     minimumSize   = new Dimension(700, 700)
     preferredSize = new Dimension(700, 700)
@@ -21,9 +42,9 @@ object GUI extends SimpleSwingApplication {
 
     // DrawSpace instance for drawing
     val drawingScreen = new DrawSpace
-    drawingScreen.preferredSize = new Dimension(500, 500)
-    drawingScreen.minimumSize = new Dimension(500, 500)
-    drawingScreen.maximumSize = new Dimension(500, 500)
+    drawingScreen.preferredSize = new Dimension(670, 600)
+    drawingScreen.minimumSize = new Dimension(670, 600)
+    drawingScreen.maximumSize = new Dimension(670, 600)
 
     //drop-down list for colours
     val colorList = new ComboBox(colours)
@@ -50,12 +71,12 @@ object GUI extends SimpleSwingApplication {
     redoBtn.peer.addActionListener(e => drawingScreen.redo())
 
     val loadBtn = new Button("Load")
-    loadBtn.peer.addActionListener(e => DrawReader.loadDrawing("DrawingFile.txt", drawingScreen))
+    loadBtn.peer.addActionListener(e => loadOrSave("Load"))
 
     val clearBtn = new Button("Clear")
     clearBtn.peer.addActionListener(e => drawingScreen.clear())
     val saveBtn = new Button("Save")
-    saveBtn.peer.addActionListener(e => DrawReader.saveDrawing("DrawingFile.txt", drawingScreen))
+    saveBtn.peer.addActionListener(e => loadOrSave("Save"))
 
     // buttons which we use to switch between settings
     val buttons = new FlowPanel {
