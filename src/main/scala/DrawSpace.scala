@@ -16,10 +16,15 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
 
   // variables which store the information of selected parameters from drop-down lists
   private var shape: String = "Line"
+
   private var currentColor: Color = Color.black
 
   // stores the shapes
-  private val shapes = Buffer[Shape]()
+  private var shapes = Buffer[Shape]()
+
+  // method for getting shapes for saving data of the shapes.
+  def getShapes = this.shapes
+
   // stores the preview of the shapes
   private val preview = Buffer[Shape]()
   // stores the information of deleted shapes before new changes
@@ -193,7 +198,11 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
 
   }
 
-
+  // method for loading shapes
+  def loadShapes(loaded: Buffer[Shape]) = {
+    shapes = loaded
+    repaint()
+  }
 
 
 }
