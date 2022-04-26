@@ -1,0 +1,26 @@
+Shapes:
+Type: Rectangle
+x-coordinate: 128
+y-coordinate: 51
+Width: 105
+Height: 156
+Color: 0,0,0
+Group: 0
+------
+Type: Rectangle
+x-coordinate: 220
+y-coordinate: 150
+Width: 100
+Height: 145
+Color: 0,0,0
+Group: 0
+------
+Type: Rectangle
+x-coordinate: 82
+y-coordinate: 262
+Width: 104
+Height: 116
+Color: 0,0,0
+Group: 0
+------
+EndOfFile
