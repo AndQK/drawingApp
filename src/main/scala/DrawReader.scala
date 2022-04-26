@@ -3,6 +3,11 @@ import java.io.{BufferedReader, BufferedWriter, FileNotFoundException, FileReade
 import scala.collection.mutable.Buffer
 import scala.util.{Failure, Success, Try}
 
+
+class CorruptedDrawingFile(msg: String) extends Exception(msg) {
+// custom exception class
+}
+
 object DrawReader {
 
   def saveDrawing(file: String, drawing: DrawSpace) = {
@@ -61,7 +66,7 @@ object DrawReader {
       var currentLine = bufferedReader.readLine().trim.toLowerCase
 
       if (!currentLine.startsWith("shapes:")) {
-        throw new Exception("Unknown file type")
+        throw new CorruptedDrawingFile("Unknown file type")
       }
       if (currentLine == null) {
         throw new Exception("The file you want to load is Empty")
@@ -76,7 +81,7 @@ object DrawReader {
         data += currentLine.trim
       }
       if (!data.last.contains("EndOfFile")) {
-        throw new Exception("Corrupted Drawing file")
+        throw new CorruptedDrawingFile("Corrupted Drawing file")
 
       }
 
@@ -93,7 +98,7 @@ object DrawReader {
           }
           data = data.drop(1)                                  //drops line: "------"
         } else {
-          throw new Exception(s"Not enough parameters for creating a shape: Instead of 7 parameters you gave only ${shapeData.length}")
+          throw new CorruptedDrawingFile(s"Not enough parameters for creating a shape: Instead of 7 parameters you gave only ${shapeData.length}")
         }
 
       }
@@ -117,6 +122,8 @@ object DrawReader {
       case _: FileNotFoundException =>
             println("Error with loading a drawing: file not found.")
       case e: IOException =>
+            println(e.getMessage)
+      case e: CorruptedDrawingFile =>
             println(e.getMessage)
       case e: Throwable =>
             println(e.getMessage)
@@ -165,7 +172,7 @@ object DrawReader {
     }
 
     shape match {
-      case None => Failure( new IOException("Wrong information in shape's data"))
+      case None => Failure( new CorruptedDrawingFile("Wrong information in shape's data"))
       case Some(s) => Success(s)
     }
   }
