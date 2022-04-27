@@ -13,6 +13,7 @@ object GUI extends SimpleSwingApplication {
 
     title    = "DrawingApp"
     resizable = false
+    // this object enables file choosing.
     val chooser = new FileChooser()
     // private method for buttons to handle file choosing and saving or loading to it.
     private def loadOrSave(name: String) = {
@@ -67,7 +68,7 @@ object GUI extends SimpleSwingApplication {
     val undoBtn = new Button("Undo")
     undoBtn.peer.addActionListener(e => drawingScreen.undo())
 
-    val redoBtn = new Button("redo")
+    val redoBtn = new Button("Redo")
     redoBtn.peer.addActionListener(e => drawingScreen.redo())
 
     val loadBtn = new Button("Load")
