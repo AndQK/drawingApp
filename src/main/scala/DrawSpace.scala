@@ -39,6 +39,7 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
   private var oldX = 0
   private var oldY = 0
 
+  // Boolean for checking if mouse is dragged
   private var isDragged = false
 
 
@@ -59,7 +60,7 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
                              oldY = currentY
          }
          case "Line"      => preview += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
-         case "Circle"    => preview += new Shape(min(oldX, currentX), min(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
+         case "Circle"    => preview += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
          case "Rectangle" => preview += new Shape(min(oldX, currentX), min(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
          case "Ellipse"   => preview += new Shape(min(oldX, currentX), min(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
          case _           => // does nothing
@@ -72,7 +73,7 @@ class DrawSpace extends Component with MouseListener with MouseMotionListener {
     if (isDragged) {
       shape match {
         case "Line"      => shapes += new Shape(oldX, oldY, currentX, currentY, currentColor, "Line", 0)
-        case "Circle"    => shapes += new Shape(min(oldX, currentX), min(oldY, currentY), abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
+        case "Circle"    => shapes += new Shape(oldX, oldY, abs(currentX - oldX), abs(currentX - oldX), currentColor, "Circle", 0)
         case "Rectangle" => shapes += new Shape(min(oldX, currentX), min(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Rectangle", 0)
         case "Ellipse"   => shapes += new Shape(min(oldX, currentX), min(oldY, currentY), abs(currentX - oldX), abs(currentY - oldY), currentColor, "Ellipse", 0)
         case _           => // does nothing
